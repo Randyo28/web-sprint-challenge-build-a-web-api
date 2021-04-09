@@ -1,7 +1,5 @@
-const express = require('express')
-const server = express()
+const server = require('./api/server')
 
-server.use(express.json())
 server.use('*', (req, res) => {
   res.json('Hey Grader!')
 })
