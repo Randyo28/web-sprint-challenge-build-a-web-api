@@ -1,4 +1,5 @@
 const actions = require('../actions/actions-model')
+const projects = require('../projects/projects-model')
 
 function logger(req, res, next) {
   console.log(`This ${req.method}, is coming from ${req.url}
@@ -35,18 +36,38 @@ function validateAction(req, res, next) {
   }
 }
 
-// function validatePost(req, res, next) {
-//   if (Object.keys(req.body).length === 0) {
-//     res.status(400).json({ message: 'Missing required post field' })
-//   } else if (!req.body.text) {
-//     res.status(400).json({ message: 'missing required post field' })
-//   } else {
-//     next()
-//   }
-// }
+function validateProjectId(req, res, next) {
+  const { id } = req.params
+
+  projects
+    .get(id)
+    .then((project) => {
+      if (!project) {
+        res.status(404).json({ message: 'project not found' })
+      } else {
+        req.project = project
+        next()
+      }
+    })
+    .catch((e) => {
+      res.status(500).json(e.message)
+    })
+}
+
+function validateProject(req, res, next) {
+  if (Object.keys(req.body).length === 0) {
+    res.status(400).json({ message: 'missing required fields' })
+  } else if (!req.body.name || !req.body.description) {
+    res.status(400).json({ message: 'missing one or more required fields' })
+  } else {
+    next()
+  }
+}
 
 module.exports = {
   logger,
   validateActionId,
   validateAction,
+  validateProjectId,
+  validateProject,
 }

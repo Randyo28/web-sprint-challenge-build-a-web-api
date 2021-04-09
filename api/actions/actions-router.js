@@ -1,4 +1,3 @@
-// Write your "actions" router here!
 const express = require('express')
 const Action = require('./actions-model')
 const {
@@ -23,7 +22,7 @@ router.get('/:id', logger, validateActionId, (req, res, next) => {
   const { id } = req.params
   Action.get(id)
     .then(() => {
-      res.json(id)
+      res.json(req.action)
     })
     .catch((err) => {
       next(err)
@@ -42,7 +41,7 @@ router.post('/', validateAction, (req, res, next) => {
     })
 })
 
-router.put('/:id', validateActionId, validateActionId, (req, res, next) => {
+router.put('/:id', validateAction, validateActionId, (req, res, next) => {
   const { id } = req.params
   const changes = req.body
 
@@ -60,7 +59,7 @@ router.delete('/:id', validateActionId, (req, res, next) => {
 
   Action.remove(id)
     .then(() => {
-      res.status(200).json(req.action)
+      res.end()
     })
     .catch((err) => {
       next(err)
