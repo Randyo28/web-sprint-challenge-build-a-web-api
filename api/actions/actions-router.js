@@ -54,7 +54,18 @@ router.put('/:id', validateActionId, validateActionId, (req, res, next) => {
       next(err)
     })
 })
-// router.delete('/:id', (req, res, next) => {})
+
+router.delete('/:id', validateActionId, (req, res, next) => {
+  const { id } = req.params
+
+  Action.remove(id)
+    .then(() => {
+      res.status(200).json(req.action)
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
 
 router.use((err, req, res) => {
   res.status(500).json({
