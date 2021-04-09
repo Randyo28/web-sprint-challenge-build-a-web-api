@@ -152,7 +152,7 @@ Middleware is software that helps add on to your program such as using HELMET mi
 
 1. The basic principles of the REST architectural style.
 
-REST principles is everyth
+REST principles is everything is a resource, each resource is unique, resources can have many representations, and every communication is stateless using http.
 
 1. Understand and explain the use of Express Routers.
 
