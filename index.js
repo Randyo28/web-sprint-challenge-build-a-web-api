@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 server.use('*', (req, res) => {
-  res.json('Hey Grader!')
+  res.json('Hey Grader!, use /api/projects or /api/actions to test out!')
 })
 
 server.listen(PORT, () => {
